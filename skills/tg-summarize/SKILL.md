@@ -1,6 +1,6 @@
 ---
 name: tg-summarize
-description: Create or resume source-linked, layered summaries of a Telegram conversation from a prepared context package or Telegram Desktop JSON export. Use for Telegram summaries, period summaries, adjustable overview length, focused conversation context, or continuing interrupted summarization.
+description: Create or resume source-linked layered summaries of one Telegram conversation from a prepared context package or Desktop JSON export. Use for period, overview, or focused summaries.
 ---
 
 # Tg Summarize
@@ -18,7 +18,7 @@ Locate [../telegram-context/scripts/telegram_context.py](../telegram-context/scr
 1. Run `python3 <engine> validate <package> --prepared-only`. Explain source omissions or corruption. An unsupported old package version requires preparation into a new directory; preserve the original package.
 2. Run `python3 <engine> status <package> --json`. Read every path listed by `next_job`, and only the source files needed for that job. Never load the full export or every transcript into context at once.
 3. Write the summary draft using the exact `job_id`, `input_hash`, ordered `covered_inputs`, and a Markdown `body`. Use `[[m:<id>]]` evidence markers, the recorded language/focus, and the reported character budgets. Submit it with `python3 <engine> record-summary <package> --input <draft.json>`.
-4. Repeat until every chunk, reduction, period and overview job is current. If interrupted, report the package path and remaining work; the next session resumes with `status`. Correct a summary with `record-summary --replace`, then regenerate its invalidated dependents. Do not edit the manifest to mark work complete.
+4. `record-summary` prints the updated status and the next job; continue from it without rerunning `status`. Repeat until every chunk, reduction, period and overview job is current. If interrupted, report the package path and remaining work; the next session resumes with `status`. Correct a summary with `record-summary --replace`, then regenerate its invalidated dependents. Do not edit the manifest to mark work complete.
 5. Run `python3 <engine> validate <package>` and check a selection of cited original messages for factual support. Deliver `context.md` and `INDEX.md`, including any unresolved warnings or partial coverage.
 
 ## Summary quality and privacy

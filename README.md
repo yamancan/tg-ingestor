@@ -192,6 +192,7 @@ The model must write the draft before `record-summary` runs. Correct a recorded 
 | `INDEX.md` | Navigation to summaries and source chunks |
 | `chunks/*.md` | Message text with day headings, minute-only times, and source anchors |
 | `summaries/*.md` | Chunk, reduction, period, and overview summaries |
+| `summaries/*.txt` | Plain summary text with bare `[[m:id]]` markers, read by parent summaries (version 4) |
 | `summaries/*.json` | Recorded model outputs and input fingerprints |
 | `messages.jsonl` | Canonical text and metadata with exact timestamps |
 | `manifest.json`, `report.json` | Settings, coverage, checksums, and source issues |
@@ -212,7 +213,7 @@ Give another AI `context.md` for an overview, plus relevant summary/chunk files 
 
 File limits are 256 MiB for source/ordinary files, 64 MiB for manifests, and 1 MiB for summary JSON. JSON nesting is limited to 64. Parsing and full validation use memory. Token estimates use characters divided by three, not a model tokenizer.
 
-New packages use version 3. Version 2 remains valid and resumable with its original rendering. For the shorter date/time display, prepare the source into a new directory. Version 1 requires fresh preparation. Existing packages are never automatically migrated or overwritten.
+New packages use version 4: the same information as version 3 in a compact chunk layout, with parent summaries reading plain text instead of linked Markdown. Versions 2 and 3 remain valid and resumable with their original rendering. For the compact layout, prepare the source into a new directory. Version 1 requires fresh preparation. Existing packages are never automatically migrated or overwritten.
 
 ## Development and privacy
 

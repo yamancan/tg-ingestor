@@ -12,7 +12,7 @@ Prepared packages preserve personal information. Keep them and original exports 
 
 - Package navigation uses fixed paths and a validated manifest/job graph. Traversal and symlink components inside packages are rejected. Reads require regular files; FIFOs, sockets and devices are rejected before reading.
 - File reads are bounded: 256 MiB for source and ordinary package files, 64 MiB for manifests, and 1 MiB for summary JSON. JSON nesting is limited to 64; duplicate object keys and non-finite numbers are rejected. Chunk limits are 1,024–1,000,000 characters; overview budgets are 100–100,000 estimated tokens.
-- Source text and metadata are fenced. Rendered summaries escape HTML, authored links/images and code delimiters; the renderer creates local evidence links from validated message IDs. Headings, lists and emphasis remain supported. The original summary body stays in JSON.
+- Source text and metadata are fenced. Rendered Markdown summaries escape HTML, authored links/images and code delimiters; the renderer creates local evidence links from validated message IDs. Headings, lists and emphasis remain supported. The original summary body stays in JSON. Version 4 also writes `summaries/*.txt` for parent summaries: unescaped model text, to be read as plain text and never rendered as Markdown or HTML.
 - New exports are prepared in a staging directory and existing nonempty packages are never overwritten. Atomic file replacement and input hashes support resumable summary recording.
 - Full validation reconstructs text and chunks from the archived source and verifies hashes, job dependencies and evidence references. It does not establish semantic accuracy or authenticate who produced an export. Checksums are not signatures.
 

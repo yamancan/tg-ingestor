@@ -1,6 +1,6 @@
 ---
 name: telegram-context
-description: Turn Telegram Desktop JSON exports into lossless text context and source-linked layered summaries for other AI tools. Use when preparing, splitting, summarizing, or resuming processing of an exported Telegram conversation. Processes text only, one conversation per independent package.
+description: Convert one Telegram Desktop JSON conversation into lossless text context and source-linked layered summaries. Use for preparing, splitting, summarizing, or resuming an export.
 ---
 
 # Telegram Context
@@ -13,7 +13,7 @@ For preparation only, use the companion `$tg-cleanup` skill. For focused or resu
 
 Use the supplied JSON file and a new output directory. If the request does not specify settings, use weeks, Europe/Istanbul, Turkish summaries, 24,000 characters per chunk and an approximately 2,000-token overview. Preserve source text in its original language. Accept day/week/month, custom chunk size, summary language, overview target and a free-text focus.
 
-Show dates once per day section and times as `HH:MM` in readable output and previews. Seconds remain in the source archive and canonical records for exact ordering, but do not repeat them in ordinary summaries. Version 2 packages remain usable; new version 3 packages use the shorter time display.
+Show dates once per day section and times as `HH:MM` in readable output and previews. Seconds remain in the source archive and canonical records for exact ordering, but do not repeat them in ordinary summaries. Version 2 and 3 packages remain usable; new version 4 packages keep the same information in a more compact chunk layout.
 
 Run:
 
@@ -29,13 +29,13 @@ Read [references/workflow.md](references/workflow.md) before generating summarie
 
     python3 <skill>/scripts/telegram_context.py status <output> --json
 
-The `next_job` contains bounded input paths, the input hash, the exact input IDs to acknowledge, and an output character budget. Read only those inputs. Do not load the whole export, canonical message file, full manifest, or all summaries into the model context. A small overview of the job's inputs can be obtained from its listed summary Markdown files; source transcripts are needed for leaf jobs and evidence checks.
+The `next_job` contains bounded input paths, the input hash, the exact input IDs to acknowledge, and an output character budget. Read only those inputs. Do not load the whole export, canonical message file, full manifest, or all summaries into the model context. A small overview of the job's inputs can be obtained from its listed summary files; source transcripts are needed for leaf jobs and evidence checks.
 
 Write a temporary summary JSON in the package's `drafts/` directory following the reference contract, then submit it:
 
     python3 <skill>/scripts/telegram_context.py record-summary <output> --input <draft.json>
 
-Repeat `status` and process `next_job` until complete. The CLI validates evidence references, renders Markdown and tracks completion. A saved draft alone is not a completed job. If a session ends, report the package path and remaining count; resume with `status` next time. Do not claim completion until validation confirms all jobs. Do not launch subagents automatically.
+`record-summary` prints the updated status and `next_job`; continue from that output until complete, without a separate `status` call. The CLI validates evidence references, renders Markdown and tracks completion. A saved draft alone is not a completed job. If a session ends, report the package path and remaining count; resume with `status` next time. Do not claim completion until validation confirms all jobs. Do not launch subagents automatically.
 
 ## Evidence and output
 
